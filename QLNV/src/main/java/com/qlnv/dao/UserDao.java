@@ -13,6 +13,20 @@ import com.qlnv.util.PasswordUtil;
 
 public class UserDao {
 
+	public boolean deleteUserById(int id) {
+		Connection connection = DBConnection.getConnection();
+		String sql = "delete from users where id = ?";
+		try {
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public List<User> getListUser() {
 		List<User> listUser = new ArrayList<User>();
 		Connection connection = DBConnection.getConnection();

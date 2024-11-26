@@ -10,6 +10,10 @@ public class UserService {
 
 	private UserDao ud = new UserDao();
 
+	public boolean deleteUserById(int id) {
+		return ud.deleteUserById(id);
+	}
+
 	public List<User> addNameRole(List<Role> listRole, List<User> listUser) {
 		for (User u : listUser) {
 			for (Role r : listRole) {

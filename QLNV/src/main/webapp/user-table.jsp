@@ -162,9 +162,10 @@
                                             <td>${u.phone}</td>
                                             <td>${u.role.name}</td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                                <a href="user-details.html" class="btn btn-sm btn-info">Xem</a>
+                                                <a href="<c:url value="/user-update?id=${u.id}"/>" class="btn btn-sm btn-primary">Sửa</a>
+                                                <a href="<c:url value="/user-delete?id=${u.id}"/>" class="btn btn-sm btn-danger">Xóa</a>
+                                                <a href="<c:url value="/user-details?id=${u.id}"/>" class="btn btn-sm btn-info">Xem</a>
+                                            	<c:if test="${u.id==id&&not empty message}">${message}</c:if>
                                             </td>
                                         </tr>
                                         </c:forEach>
