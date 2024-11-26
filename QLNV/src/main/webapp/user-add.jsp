@@ -133,7 +133,7 @@
                     <div class="col-md-2 col-12"></div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material">
+                            <form action="<c:url value="/user-add"/>" method="post" class="form-horizontal form-material">
                                 <div class="form-group">
                                     <label class="col-md-12">Name</label>
                                     <div class="col-md-12">
@@ -182,6 +182,7 @@
                                         <a href="user-table.html" class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
+                                <c:if test="${not empty message}">${message}</c:if>
                             </form>
                         </div>
                     </div>

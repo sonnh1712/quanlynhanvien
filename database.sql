@@ -11,7 +11,7 @@ create table users(
 	name varchar(30) not null,
 	email varchar(30) not null unique,
 	password varchar(60) not null,
-	address varchar(30) not null,
+	address varchar(50) not null,
 	phone varchar(10) not null,
 	role_id int not null,
 	foreign key (role_id) references roles(id),
