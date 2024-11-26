@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.qlnv.service.RoleService;
 import com.qlnv.service.UserService;
 
-@WebServlet(urlPatterns = { "/user-add" })
+@WebServlet(urlPatterns = { "/user-add", "/user-table" })
 public class UserController extends HttpServlet {
 
 	private RoleService rs = new RoleService();
@@ -27,7 +27,11 @@ public class UserController extends HttpServlet {
 
 			req.getRequestDispatcher("user-add.jsp").forward(req, resp);
 			break;
+		case "/user-table":
+			req.setAttribute("listUser", us.addNameRole(rs.getListRole(), us.getListUser()));
 
+			req.getRequestDispatcher("user-table.jsp").forward(req, resp);
+			break;
 		default:
 			break;
 		}
