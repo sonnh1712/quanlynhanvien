@@ -13,6 +13,27 @@ import com.qlnv.util.PasswordUtil;
 
 public class UserDao {
 
+	public boolean editUser(int id, String name, String email, String password, String address, String phone,
+			int roleId) {
+		Connection connection = DBConnection.getConnection();
+		String sql = "update users set name=?,email=?,password=?,address=?,phone=?,role_id=? where id=?";
+		try {
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1, name);
+			ps.setString(2, email);
+			ps.setString(3, PasswordUtil.hashPassword(password));
+			ps.setString(4, address);
+			ps.setString(5, phone);
+			ps.setInt(6, roleId);
+			ps.setInt(7, id);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public boolean deleteUserById(int id) {
 		Connection connection = DBConnection.getConnection();
 		String sql = "delete from users where id = ?";

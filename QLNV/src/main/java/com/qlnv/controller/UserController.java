@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.qlnv.service.RoleService;
 import com.qlnv.service.UserService;
 
-@WebServlet(urlPatterns = { "/user-add", "/user-table", "/user-delete" })
+@WebServlet(urlPatterns = { "/user-add", "/user-table", "/user-delete", "/user-edit" })
 public class UserController extends HttpServlet {
 
 	private RoleService rs = new RoleService();
@@ -35,13 +35,21 @@ public class UserController extends HttpServlet {
 		case "/user-delete":
 			int deleteId = Integer.valueOf(req.getParameter("id"));
 
-			if(!us.deleteUserById(deleteId)) {
+			if (!us.deleteUserById(deleteId)) {
 				req.setAttribute("id", deleteId);
 				req.setAttribute("message", "Xoa that bai");
 			}
 			req.setAttribute("listUser", us.addNameRole(rs.getListRole(), us.getListUser()));
 
 			req.getRequestDispatcher("user-table.jsp").forward(req, resp);
+			break;
+		case "/user-edit":
+			int editId = Integer.valueOf(req.getParameter("id"));
+
+			req.setAttribute("id", editId);
+			req.setAttribute("listRole", rs.getListRole());
+
+			req.getRequestDispatcher("user-edit.jsp").forward(req, resp);
 			break;
 		default:
 			break;
@@ -71,7 +79,25 @@ public class UserController extends HttpServlet {
 
 			req.getRequestDispatcher("user-add.jsp").forward(req, resp);
 			break;
+		case "/user-edit":
+			int editId = Integer.valueOf(req.getParameter("id"));
+			String editName = req.getParameter("name");
+			String editEmail = req.getParameter("email");
+			String editPassword = req.getParameter("password");
+			String editAddress = req.getParameter("address");
+			String editPhone = req.getParameter("phone");
+			int editRoleId = Integer.valueOf(req.getParameter("role-id"));
 
+			if (us.editUser(editId, editName, editEmail, editPassword, editAddress, editPhone, editRoleId)) {
+				req.setAttribute("message", "cap nhat thanh cong");
+			} else {
+				req.setAttribute("message", "cap nhat that bai");
+			}
+			req.setAttribute("id", editId);
+			req.setAttribute("listRole", rs.getListRole());
+
+			req.getRequestDispatcher("user-edit.jsp").forward(req, resp);
+			break;
 		default:
 			break;
 		}

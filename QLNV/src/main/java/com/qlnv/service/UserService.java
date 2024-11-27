@@ -10,6 +10,11 @@ public class UserService {
 
 	private UserDao ud = new UserDao();
 
+	public boolean editUser(int id, String name, String email, String password, String address, String phone,
+			int roleId) {
+		return ud.editUser(id, name, email, password, address, phone, roleId);
+	}
+
 	public boolean deleteUserById(int id) {
 		return ud.deleteUserById(id);
 	}
