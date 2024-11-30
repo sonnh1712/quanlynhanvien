@@ -17,3 +17,12 @@ create table users(
 	foreign key (role_id) references roles(id),
 	check (name != '' and email != '' and password != '' and address != '' and char_length(phone) = 10 and role_id != '')
 );
+create table projects(
+	id int primary key auto_increment,
+	name varchar(30) not null unique,
+	start_date date not null,
+	end_date date not null,
+	user_id int not null,
+	foreign key (user_id) references users(id),
+	check (name != '' and start_date <= end_date and user_id != '')
+);
