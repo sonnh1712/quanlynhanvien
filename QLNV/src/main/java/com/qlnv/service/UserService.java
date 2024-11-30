@@ -10,6 +10,10 @@ public class UserService {
 
 	private UserDao ud = new UserDao();
 
+	public User findUserByEmail(String email) {
+		return ud.findUserByEmail(email);
+	}
+
 	public boolean editUser(int id, String name, String email, String password, String address, String phone,
 			int roleId) {
 		return ud.editUser(id, name, email, password, address, phone, roleId);
