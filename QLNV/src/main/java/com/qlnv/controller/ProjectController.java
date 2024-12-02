@@ -1,7 +1,6 @@
 package com.qlnv.controller;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,16 +39,12 @@ public class ProjectController extends HttpServlet {
 			String addName = req.getParameter("name");
 			String addStartDate = req.getParameter("start-date");
 			String addEndDate = req.getParameter("end-date");
-			Object object = req.getSession().getAttribute("user");
-			User user = (User) object;
-			int addUserId = user.getId();
+			int addUserId = ((User) req.getSession().getAttribute("user")).getId();
 
-			if(ps.addProject(addName, addStartDate, addEndDate, addUserId)) {
-				req.setAttribute("message", "them thanh cong");
-			} else {
-				req.setAttribute("message", "them that bai");
-			}
-			
+			String message = ps.addProject(addName, addStartDate, addEndDate, addUserId) ? "Thêm thành công"
+					: "Thêm thất bại";
+
+			req.setAttribute("message", message);
 			req.getRequestDispatcher("project-add.jsp").forward(req, resp);
 			break;
 

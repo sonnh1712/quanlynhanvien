@@ -24,31 +24,27 @@ public class UserController extends HttpServlet {
 		switch (path) {
 		case "/user-add":
 			req.setAttribute("listRole", rs.getListRole());
-
 			req.getRequestDispatcher("user-add.jsp").forward(req, resp);
 			break;
 		case "/user-table":
 			req.setAttribute("listUser", us.addNameRole(rs.getListRole(), us.getListUser()));
-
 			req.getRequestDispatcher("user-table.jsp").forward(req, resp);
 			break;
 		case "/user-delete":
-			int deleteId = Integer.valueOf(req.getParameter("id"));
+			int deleteId = Integer.parseInt(req.getParameter("id"));
 
-			if (!us.deleteUserById(deleteId)) {
-				req.setAttribute("id", deleteId);
-				req.setAttribute("message", "Xoa that bai");
-			}
+			String message = us.deleteUserById(deleteId) ? null : "Xóa thất bại";
+
+			req.setAttribute("id", deleteId);
+			req.setAttribute("message", message);
 			req.setAttribute("listUser", us.addNameRole(rs.getListRole(), us.getListUser()));
-
 			req.getRequestDispatcher("user-table.jsp").forward(req, resp);
 			break;
 		case "/user-edit":
-			int editId = Integer.valueOf(req.getParameter("id"));
+			int editId = Integer.parseInt(req.getParameter("id"));
 
 			req.setAttribute("id", editId);
 			req.setAttribute("listRole", rs.getListRole());
-
 			req.getRequestDispatcher("user-edit.jsp").forward(req, resp);
 			break;
 		default:
@@ -68,34 +64,32 @@ public class UserController extends HttpServlet {
 			String addPassword = req.getParameter("password");
 			String addAddress = req.getParameter("address");
 			String addPhone = req.getParameter("phone");
-			int addRoleId = Integer.valueOf(req.getParameter("role-id"));
+			int addRoleId = Integer.parseInt(req.getParameter("role-id"));
 
-			if (us.addUser(addName, addEmail, addPassword, addAddress, addPhone, addRoleId)) {
-				req.setAttribute("message", "them thanh cong");
-			} else {
-				req.setAttribute("message", "them that bai");
-			}
+			String message = us.addUser(addName, addEmail, addPassword, addAddress, addPhone, addRoleId)
+					? "Thêm thành công"
+					: "Thêm thất bại";
+
+			req.setAttribute("message", message);
 			req.setAttribute("listRole", rs.getListRole());
-
 			req.getRequestDispatcher("user-add.jsp").forward(req, resp);
 			break;
 		case "/user-edit":
-			int editId = Integer.valueOf(req.getParameter("id"));
+			int editId = Integer.parseInt(req.getParameter("id"));
 			String editName = req.getParameter("name");
 			String editEmail = req.getParameter("email");
 			String editPassword = req.getParameter("password");
 			String editAddress = req.getParameter("address");
 			String editPhone = req.getParameter("phone");
-			int editRoleId = Integer.valueOf(req.getParameter("role-id"));
+			int editRoleId = Integer.parseInt(req.getParameter("role-id"));
 
-			if (us.editUser(editId, editName, editEmail, editPassword, editAddress, editPhone, editRoleId)) {
-				req.setAttribute("message", "cap nhat thanh cong");
-			} else {
-				req.setAttribute("message", "cap nhat that bai");
-			}
+			String message1 = us.editUser(editId, editName, editEmail, editPassword, editAddress, editPhone, editRoleId)
+					? "Cập nhật thành công"
+					: "Cập nhật thất bại";
+
+			req.setAttribute("message", message1);
 			req.setAttribute("id", editId);
 			req.setAttribute("listRole", rs.getListRole());
-
 			req.getRequestDispatcher("user-edit.jsp").forward(req, resp);
 			break;
 		default:
